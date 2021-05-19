@@ -154,13 +154,13 @@ exports.getAllProducts = (req, res) => {
 };
 
 exports.getAllUniqueCategories = (req, res) => {
-  Product.distinct("categories", {}, (err, categories) => {
+  Product.distinct("category", {}, (err, category) => {
     if (err) {
       return res.status(400).json({
-        error: " No category found",
+        error: "NO category found",
       });
     }
-    res.json(categories);
+    res.json(category);
   });
 };
 
@@ -174,9 +174,9 @@ exports.updateStock = (req, res, next) => {
     };
   });
 
-  Product.bulkWrite(myOperation, {}, (err, products) => {
+  Product.bulkWrite(myOperations, {}, (err, products) => {
     if (err) {
-      return res.send(400).json({
+      return res.status(400).json({
         error: "Bulk operation failed",
       });
     }

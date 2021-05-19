@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-
-//as a middleware
 const { isSignedIn, isAuthenticated, isAdmin } = require("../controllers/auth");
 const { getUserById, pushOrderInPurchaseList } = require("../controllers/user");
 const { updateStock } = require("../controllers/product");
+
 const {
   getOrderById,
   createOrder,
@@ -17,8 +16,7 @@ const {
 router.param("userId", getUserById);
 router.param("orderId", getOrderById);
 
-//actual routes
-
+//Actual routes
 //create
 router.post(
   "/order/create/:userId",
@@ -28,9 +26,7 @@ router.post(
   updateStock,
   createOrder
 );
-
 //read
-
 router.get(
   "/order/all/:userId",
   isSignedIn,
@@ -42,16 +38,16 @@ router.get(
 //status of order
 router.get(
   "/order/status/:userId",
-  isAdmin,
-  isAuthenticated,
   isSignedIn,
+  isAuthenticated,
+  isAdmin,
   getOrderStatus
 );
 router.put(
   "/order/:orderId/status/:userId",
-  isAdmin,
   isSignedIn,
   isAuthenticated,
+  isAdmin,
   updateStatus
 );
 
